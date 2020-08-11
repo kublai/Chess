@@ -17,14 +17,44 @@ public class Ray1 : MonoBehaviour
     private GlobalConfig globalConfig;
     private GameObject statusObj;
 
-    private ArrayList listPieces={"BC1","RE1","KG1","PA2","QD1","RH1","RH8","QD8",
-                                  "PH7","KB8","RE8","BC8","BF8","KG8","PH7","PF7",
-                                  "PE7","PD7","PC7","PB7","PA7","BF1","KB1","RA1",
-                                  "PD2","PB2","PC2","PE2","PF2","PG2","PH2","RA8"};
+    private ArrayList listPieces = new ArrayList(); 
 
 
     void Start()
     {
+        listPieces.Add("BC1");
+        listPieces.Add("RE1");
+        listPieces.Add("KG1");
+        listPieces.Add("PA2");
+        listPieces.Add("PA2");
+        listPieces.Add("QD1");
+        listPieces.Add("RH1");
+        listPieces.Add("RH8");
+        listPieces.Add("QD8");
+        listPieces.Add("PH7");
+        listPieces.Add("KB8");
+        listPieces.Add("RE8");
+        listPieces.Add("BC8");
+        listPieces.Add("BF8");
+        listPieces.Add("KG8");
+        listPieces.Add("PH7");
+        listPieces.Add("PF7");
+        listPieces.Add("PE7");
+        listPieces.Add("PD7");
+        listPieces.Add("PC7");
+        listPieces.Add("PB7");
+        listPieces.Add("PA7");
+        listPieces.Add("BF1");
+        listPieces.Add("KB1");
+        listPieces.Add("RA1");
+        listPieces.Add("PD2");
+        listPieces.Add("PB2");
+        listPieces.Add("PC2");
+        listPieces.Add("PE2");
+        listPieces.Add("PF2");
+        listPieces.Add("PG2");
+        listPieces.Add("PH2");
+        listPieces.Add("RA8");
         cam = GetComponent<Camera>();
         trf = GetComponent<Transform>();
         statusObj = GameObject.Find("GameStatus");
@@ -40,7 +70,8 @@ public class Ray1 : MonoBehaviour
             direction = ray.direction;
             origin = ray.origin;
             //check if a piece is touched 
-
+            Debug.Log("ray detected");
+            
             //No piece touched, then check in which square the board was touched
             k = (((-1) * trf.position.y) / ray.direction.y) ;
             flatx = (trf.position.x + k * ray.direction.x)/6;
@@ -74,8 +105,13 @@ public class Ray1 : MonoBehaviour
         Debug.Log("Beep");
     }
 
-    void takePiece(){
+    void takePiece()
+    {
         
+    }
+
+    bool sameTeamPiece(){
+        return true;
     }
     
     //move the piece to the new position
@@ -84,23 +120,24 @@ public class Ray1 : MonoBehaviour
             globalConfig.newposX = x;
             globalConfig.newposZ = z;
             if (globalConfig.selectedPieceCode != ""){
-                PieceConfig pc = GameObject.Find(globalConfig.selectedPieceCode).GetComponent<PieceConfig>();
-                if (globalConfig.newposX != pc.pieceCol || globalConfig.newposZ != pc.pieceRow) { 
-                    globalConfig.activePiece = GameObject.Find(globalConfig.selectedPieceCode);
-                }
+               // PieceConfig pc = GameObject.Find(globalConfig.selectedPieceCode).GetComponent<PieceConfig>();
+               // if (globalConfig.newposX != pc.pieceCol || globalConfig.newposZ != pc.pieceRow) { 
+               //     globalConfig.activePiece = GameObject.Find(globalConfig.selectedPieceCode);
+               // }
                 
             }
     }
     //Verify if the new position in Occupied
     bool newPositionOccupied(){
-        foreach( var item in listPieces){
-                GameObject p = GameObject.Find(item);
-                int r = (int)item.GetComponent<PieceConfig>().pieceRow; //row of the piece
-                int c = (int)item.GetComponent<PieceConfig>().pieceCol; //column of the piece
-                if (r == flatz && c ==flatx){
-                    return false;
-                }
-            }
-            return true;
+        GameObject piece;
+        foreach( string item in listPieces){
+            piece = GameObject.Find(item);
+            //int r = (int)piece.GetComponent<PieceConfig>().pieceRow; //row of the piece
+            //int c = (int)piece.GetComponent<PieceConfig>().pieceCol; //column of the piece
+            //if (r == flatz && c ==flatx){
+            //    return true;
+            //}
+        }
+        return false;
     }
 }
